@@ -1,0 +1,604 @@
+\documentclass{beamer}
+
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{natbib}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usetikzlibrary{shapes,arrows,positioning,shadows}
+\usenavigationsymbolstemplate{}
+\setbeamertemplate{caption}[numbered]
+
+\newcommand{\bftt}[1]{\textbf{\texttt{#1}}}
+\newcommand{\comments}[1]{{\color[HTML]{008080}\textit{\textbf{\texttt{#1}}}}}
+\newcommand{\cmd}[1]{{\color[HTML]{008000}\bftt{#1}}}
+\newcommand{\bs}{\char`\\}
+\newcommand{\cmdbs}[1]{\cmd{\bs#1}}
+\newcommand{\lcb}{\char '173}
+\newcommand{\rcb}{\char '175}
+\newcommand{\cmdbegin}[1]{\cmdbs{begin\lcb}\bftt{#1}\cmd{\rcb}}
+\newcommand{\cmdend}[1]{\cmdbs{end\lcb}\bftt{#1}\cmd{\rcb}}
+
+
+\title{Introduction to \LaTeX}
+\author{Bruno Castanho Silva}
+
+\date{28.07.2017}
+
+\subtitle{Day 2: The Fun}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}[fragile]{Tables}
+	\begin{itemize}
+		\item They take some getting used to...
+		\item Use the \textit{float} \verb|\begin{table}| and the \textit{environment} \verb|\begin{tabular}|.
+		\item Floats are for tables and figures. They indicate to \LaTeX~that the float should go where it is most convenient in the page.
+		\begin{itemize}
+			\item Meaning, you place the table in your text file and the compiler finds the best place for it in the output page. No need to drag up or down when writing more text...
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tabular}
+	\begin{itemize}
+		\item The \cmd{tabular} environment is part of the \cmd{tabularx} package.
+		\item The mandatory argument specifies the number of columns and the alignment of text in each one:
+	\end{itemize}
+	
+	\begin{tabular}{l | lrr}
+	\verb=\begin{tabular}{lrr}= & & & \\
+	\verb=Item & Qty & Unit \$ \\= & Item & Qty & Unit \$ \\
+	\verb=Widget & 1 & 199.99 \\= & Widget & 1 & 199.99 \\
+	\verb=Gadget & 2 & 399.99 \\= & Gadget & 2 & 399.99 \\ 
+	\verb=Cable & 3 & 19.99 \\= & Cable & 3 & 19.99 \\
+	\verb|\end{tabular}|
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Tabular}
+	\begin{itemize}
+		\item Vertical lines are also defined in the mandatory options of \verb|\tabular{}|, with a $\mid$ between columns.
+		\item Horizontal lines are  added with the command \verb|\hline|:
+		
+		\medskip
+		\begin{tabular}{l | l|r|r|}
+			\verb=\begin{tabular}{|l|r|r|} \hline=  &
+			\multicolumn{3}{c}{ } \\ \cline{2-4}
+			\verb=Item & Qty & Unit \$ \\ \hline= & Item & Qty & Unit \$ \\ \cline{2-4}
+			\verb=Widget & 1 & 199.99 \\= & Widget & 1 & 199.99 \\
+			\verb=Gadget & 2 & 399.99 \\= & Gadget & 2 & 399.99 \\ 
+			\verb=Cable & 3 & 19.99 \\ \hline= & Cable & 3 & 19.99 \\ \cline{2-4}
+			\verb|\end{tabular}|
+		\end{tabular}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Fun with Tables}
+	\begin{itemize}
+		\item Generate the following Table in the sharelatex file.
+	\end{itemize}
+	\begin{tabular}{|l r r | c|} \hline
+	\textbf{Country} & \textbf{Year} & \textbf{GDP (\$)} & \textbf{Country Code} \\ \hline
+	Argentina & 2010 & 3.7 & AR-2010 \\
+	Argentina & 2011 & 3.75 & AR-2011 \\
+	Austria & 2010 & 2.56 & AT-2010 \\
+	Austria & 2011 & 2.76 & AT-2011 \\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Make-up Time}
+	\begin{itemize}
+		\item The default options of lines for tables are usually not very good looking...
+		\item Package \verb|\usepackage{booktabs}| helps:
+			\end{itemize}
+		\begin{tabular}{c c}
+				\begin{tabular}{|l r r|} \hline
+					\textbf{Country} & \textbf{Year} & \textbf{GDP (\$)} \\ \hline
+					Argentina & 2010 & 3.7 \\
+					Argentina & 2011 & 3.75 \\
+					Austria & 2010 & 2.56 \\
+					Austria & 2011 & 2.76 \\ \hline
+			\end{tabular}
+			& 
+			\begin{tabular}{l r r} \toprule
+				\textbf{Country} & \textbf{Year} & \textbf{GDP (\$)} \\ \midrule
+				Argentina & 2010 & 3.7 \\
+				Argentina & 2011 & 3.75 \\
+				Austria & 2010 & 2.56 \\
+				Austria & 2011 & 2.76 \\ \bottomrule
+			\end{tabular} \\
+		\end{tabular}
+		\begin{itemize}
+			\item Commands for the bars on top, middle of the table, or bottom:
+			\item \verb|\toprule|, \verb|\midrule|, and \verb|\bottomrule|
+		\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Code}
+	\begin{verbatim}
+	\begin{tabular}{l r r} \toprule
+	\textbf{Country} & \textbf{Year} &
+	 \textbf{GDP (\$)} \\ \midrule
+	Argentina & 2010 & 3.7 \\
+	Argentina & 2011 & 3.75 \\
+	Austria & 2010 & 2.56 \\
+	Austria & 2011 & 2.76 \\ \bottomrule
+	\end{tabular} \\
+	\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Table Environment}
+	\begin{itemize}
+		\item Captions and labels:
+		\begin{itemize}
+			\item \verb|\caption{Title of your Table here}|: define the title...
+			\item \verb|\label{short lable here}|: give a label that you can refer to in the text.
+		\end{itemize}
+		\item Positioning:
+		\begin{itemize}
+			\item Defined as an option of the \verb|\begin{table}| command:
+			\begin{itemize}
+				\item \verb|\begin{table}[!h]|
+			\end{itemize}
+			\item \textbf{h}: here;
+			\item \textbf{t}: top of the page (this or next);
+			\item \textbf{b}: bottom of the page;
+			\item \textbf{p}: in this page;
+			\item \textbf{!}: in the following place (h, t, or b), even if looks bad.
+			\item Default: [htb]
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+	\begin{table}
+			\caption{National Economies}
+			\label{tab:nat:eco}
+	\begin{tabular}{l r r} \toprule
+		\textbf{Country} & \textbf{Year} &
+		\textbf{GDP (\$)} \\ \midrule
+		Argentina & 2010 & 3.7 \\
+		Argentina & 2011 & 3.75 \\
+		Austria & 2010 & 2.56 \\
+		Austria & 2011 & 2.76 \\ \bottomrule
+	\end{tabular}
+	\end{table} 
+	As we can see in Table~\ref{tab:nat:eco}, blablabla
+\end{frame}
+
+\begin{frame}[fragile]{Code}
+	\begin{verbatim}
+	\begin{table}[t]
+	\caption{National Economies}
+	\label{tab:nat:eco}
+	\begin{tabular}{l r r} \toprule
+	\textbf{Country} & \textbf{Year} &
+	\textbf{GDP (\$)} \\ \midrule
+	Argentina & 2010 & 3.7 \\
+	Argentina & 2011 & 3.75 \\
+	Austria & 2010 & 2.56 \\
+	Austria & 2011 & 2.76 \\ \bottomrule
+	\end{tabular} \\
+	\end{table}
+	
+	As we can see in Table~\ref{tab:nat:eco}, blablabla
+	\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Good to Know}
+	\begin{itemize}
+		\item Floats are presented in the output in the order they are listed in the text file.
+		\begin{itemize}
+			\item If one is too large to be well placed in the text, it will block all others.
+		\end{itemize}
+		\item The \verb|\ref{}| command can be used with \cmd{labels} also for chapters, sections, subsections, figures, and equations.
+		\item Don't give the same label to two elements.
+		\item To have content in a cell spread over multiple columns, use the \verb|\multicolumn{cols}{pos}{text}| command. The first option is the number of columns it will span; the second is the positioning (\textbf{c}, \textbf{l}, \textbf{p{}}, etc), and the third is the text.
+		\item And the worse: the \cmd{tabular} environment ignores page formatting...
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{So...}
+\begin{itemize}
+	\item If we type:
+\end{itemize}
+\begin{verbatim} 
+\begin{table}
+	\caption{Big EFAt table}
+	\begin{tabular}{l l l} \toprule
+		\textbf{Item} & \textbf{EFA Factor Loading}
+		 &  \textbf{Mean} \\ \midrule
+		People who only say bad things about this country have
+		 the same right as anyone else to appear on television 
+		 to make speeches. & 1.2 & 5.18 \\
+		People who only say bad things about our form of 
+		government, not just the current administration but the 
+		system of government, should not have the right to 
+		vote. & 0.94 & 1.84 \\ \bottomrule
+	\end{tabular}
+\end{table}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{We get}
+\begin{table}
+	\caption{Big EFAt table}
+	\begin{tabular}{l l l} \toprule
+		\textbf{Item} & \textbf{EFA Factor Loading}
+		&  \textbf{Mean} \\ \midrule
+		People who only say bad things about this country have
+		the same right as anyone else to appear on television 
+		to make speeches. & 1.2 & 5.18 \\
+		People who only say bad things about our form of 
+		government, not just the current administration but the 
+		system of government, should not have the right to 
+		vote. & 0.94 & 1.84 \\ \bottomrule 
+	\end{tabular}
+\end{table}
+\end{frame} 
+
+\begin{frame}[fragile]{Solution...}
+	\begin{itemize}
+		\item Add a command \verb|p{}| to the \cmd{tabular} options when setting a column to define its max width. Example:
+		\begin{itemize}
+			\item Instead of \verb|\begin{tabular}{lll}|, use \verb|\begin{tabular}{p{5cm}ll}|
+		\end{itemize}
+		\item You can also define as a proportion of the text width, with \verb|p{.75\textwidth}|, for 75\%, for example.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{With p\{5cm\} We Get}
+	\begin{table}
+		\caption{Big EFAt table}
+		\begin{tabular}{p{5cm} l l} \toprule
+			\textbf{Item} & \textbf{EFA Factor Loading}
+			&  \textbf{Mean} \\ \midrule
+			People who only say bad things about this country have
+			the same right as anyone else to appear on television 
+			to make speeches. & 1.2 & 5.18 \\
+			People who only say bad things about our form of 
+			government, not just the current administration but the 
+			system of government, should not have the right to 
+			vote. & 0.94 & 1.84 \\ \bottomrule 
+		\end{tabular}
+	\end{table}
+\end{frame} 
+
+\begin{frame}[fragile]{Alternatively...}
+	\begin{itemize}
+		\item The \cmd{landscape} environment.
+		\item Everything within it is set to, well, landscape orientation.
+	\end{itemize}
+	\begin{verbatim}
+	\begin{landscape}
+	Big fat table
+	\end{landscape}
+	\end{verbatim}
+	\begin{itemize}
+		\item NB! Don't forget to load the \cmd{lscape} package in the preamble!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Practice}
+	\begin{itemize}
+		\item Produce the table below in a new document in Sharelatex.
+	\end{itemize}
+	\begin{table}[!ht]
+		\scriptsize
+		\caption{Budget for Summer University Course -- Political Psychology}
+			\begin{tabular}{l r r r r r} \toprule
+				\textbf{COSTS} & \textbf{Units} & \textbf{Unit cost \euro} & \multicolumn{1}{r}{\textbf{(\$)}} & \textbf{TOTAL \euro} & \multicolumn{1}{r}{\textbf{(\$)}} \\ \midrule
+				\multicolumn{6}{l}{\textit{Organizational Costs}}  \\
+				-- travel (Europeans) & 12 & 250 & (312.5) & 3000 & 3750 \\
+				-- travel (Americans) & 4 & 900 & (1125) & 3600 & 4500 \\
+				-- hotel (nights) & 16 $\times$ 2 & 100 & (125) & 3200 & 4000 \\
+				\multicolumn{6}{l}{\textit{Catering and meals}} \\
+				-- Official dinner & 20 & 20 & (25.00) & 400 & (500) \\
+				-- Lunch & 20 & 12 & (15) & 240 & (300) \\
+				-- Tea breaks & 3$\times$20 & 3 & (3.75) & 180 & (225) \\ \midrule
+				\multicolumn{4}{l}{Contingencies and exchange rate risk} & 500 & (625) \\ \midrule
+				TOTAL & & & & 11120 & (13900) \\ \midrule
+				\textbf{FUNDING} & & & & & \\
+				ISPP & & & & 4000 & (5000) \\
+				\multicolumn{4}{l}{CEU Academic Events Fund} & 7120 & (8900) \\ 
+				TOTAL & & & & 11120 & (13900) \\ \bottomrule
+				\multicolumn{6}{l}{\tiny{Notes: Exchange rate: \euro 1.00 = US\$ 1.25.}}
+			\end{tabular}
+		\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Longtable}
+\begin{itemize}  
+\item If the table is too long because of too many lines, look for the \cmd{longtable} package. The syntax is different from \cmd{tabular}.
+\item We use the \cmd{longtable} environment instead of both \cmd{table} and \cmd{tabular}.
+\item Example:
+\end{itemize}
+\begin{verbatim}
+\begin{longtable}{l | l r c}
+\caption{A very long table}
+\label{tab:long}
+...
+\end{longtable} 
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Headers and footers in longtable}
+\begin{itemize}
+\item The first thing after the \cmd{caption} is defining headers and footers. We define the first head (will appear only on the first page), the head, which appears at the top of every page, the foot, appearing at the bottom of every page, and the last foot, appearing at the bottom of the last page.
+\item Example in Sharelatex, file Longtable.tex.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Figures}
+	\begin{itemize}
+		\item To add figures we use the package \cmd{graphicx}.
+		\begin{itemize}
+			\item It has the function \verb|\includegraphics[]{}|.
+		\end{itemize}
+		\item Figures are \textit{floats}, like tables.
+		\item Meaning, the float works the same:
+	\end{itemize}
+	\begin{verbatim}
+	\begin{figure}
+	\caption{Average Treatment Effects of Alignment}
+	\label{fig:synth}
+	\includegraphics[scale=0.4]{fig3_synth_placs.pdf}
+	\end{figure}
+	\end{verbatim}
+\end{frame}
+
+\begin{frame}{Example}
+	\begin{figure}
+		\caption{Average Treatment Effects of Alignment}
+		\label{fig:synth}
+		\includegraphics[scale=0.4]{fig3_synth_placs.pdf}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Figures}
+	\begin{itemize}
+		\item Formats accepted:
+		\begin{itemize}
+			\item .png, .jpg, .bmp, .ps (postscript), and .pdf(!);
+			\item If you have a PDF file with nothing but the picture, you can add it to the text just like any other image.
+			\item Advantage: exporting R graphs as .pdf gives the best output.
+		\end{itemize}
+		\item Options (\verb|\includegraphics[options]{figure.jpg}|) help set the size. You can control the \cmd{width}, \cmd{height}, or simply \cmd{scale}.
+		\item Path: If the image is in the same folder as the .tex file, you just need the name. Otherwise, you should include the path to get there.
+		\item If in a subfolder:
+		\begin{itemize}
+			\item \verb|\includegraphics{graphs/myfigure.png}|
+		\end{itemize}
+		\item If not in a subfolder:
+		\begin{itemize}
+			\item \verb|\includegraphics{C:/Users/MyName/Documents/PhD/...}|
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Notes on Figures}
+	\begin{itemize}
+		\item To add notes to figures, use the \cmd{floatfoot} command in the \cmd{floatrow} package:
+	\end{itemize}
+	\begin{verbatim}
+	\usepackage[capposition=top]{floatrow}
+	\begin{document}
+	\begin{figure}
+	\includegraphics{pipe.jpg}
+	\floatfoot{Notes: This is not a pipe.}
+	\end{figure}
+	\end{document}
+	\end{verbatim}
+	\begin{itemize}
+		\item I will not show this output in the slides because the \cmd{floatrow} package is incompatible with \cmd{beamer}, but try out in sharelatex. The figure is already there.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\centering
+	\LARGE Citations
+\end{frame}
+
+\begin{frame}[fragile]{Managing References}
+	\begin{itemize}
+		\item All references have to go on a separate file, with the \cmd{.bib} extension for the ``bibtex'' database format.
+		\item An entry for a paper will look like this:
+	\end{itemize}
+	\begin{verbatim}
+	@article{ElchardusSpruyt2016,
+	author = {Elchardus, Mark and Spruyt, Bram},
+	journal = {Government \& Opposition},
+	pages = 111--33,
+	volume = 51,
+	title = {{Populism, Persistent Republicanism and 
+	Declinism: An Empirical Analysis of Populism as
+	a Thin Ideology}},
+	year = 2016
+	}
+	\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Unpacking}
+	\begin{itemize}
+		\item The first thing is what kind of publication that is\ldots
+		\begin{itemize}
+			\item @article
+			\item @book
+			\item @incollection
+			\item @unpublished
+		\end{itemize}
+		\item Next comes a key. It lets you reference that paper in the text.
+		\begin{itemize}
+			\item In the example, it's the \cmd{ElchardusSpruyt2016}.
+		\end{itemize}
+		\item Having a key that is authors + year helps in managing your citations in text.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Unpacking II}
+	\begin{itemize}
+		\item Author names in \verb|author = {}| can be both \cmd{Last, First} or \cmd{First Last}. To add co-authors, always use an \cmd{and} between their names, without commas.
+		\begin{itemize}
+			\item NB! Contrary to author names in the title, this time you \textbf{do not} use \verb|\and|.
+		\end{itemize}
+		\item Special characters can be used in the .bib entry just like in the text. See the \verb|\&| for the journal name.
+		\item For all entries where there is a blank space (e.g., between two words), you should have it between \{\}.
+		\begin{itemize}
+			\item For the others, it doesn't matter if they are within \{\} or not. \verb|year = 2016| and \verb|year = {2016}| would produce the same output.
+		\end{itemize}
+		\item Double \{\{\}\} forces the capitalization you entered.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example of a Book Entry}
+	\begin{verbatim} 
+	@book{Canovan1981,
+		address = {London},
+		author = {Canovan, Margaret},
+		publisher = {Junction Books},
+		title = {{Populism}},
+		year = {1981}
+	}
+	\end{verbatim} 
+	\begin{itemize}
+		\item Note that the order of elements does not matter. The only important thing is that the \cmd{key} is first.
+		\item Also, pay attention to the commas. After each element, except for the last!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example of a Book Chapter}
+	\begin{verbatim}
+	@incollection{Mudde2013,
+	address = {Oxford},
+	author = {Mudde, Cas and {Rovira Kaltwasser},
+	Crist\'{o}bal},
+	booktitle = {Oxford Handbook of Political Ideologies},
+	editor = {Freeden, Michael and Sargent, Lyman Tower and
+	Stears, Marc},
+	pages = {493--512},
+	publisher = {Oxford University Press},
+	title = {{Populism}},
+	year = {2013}
+	}
+	\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Practicalities}
+	\begin{itemize}
+		\item For each project, create a new .bib file;
+		\item You can export these bibtex citations directly from most reference managers.
+		\begin{itemize}
+			\item Zotero, Endnote, Mendeley, etc...
+		\end{itemize}
+		\item When exporting, attention not to have two entries with the same key!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Adding References}
+	\begin{itemize}
+		\item Use the package \cmd{natbib}.
+		\item Add, at the end of the file right before \verb|\end{document}|, the following commands:
+		\begin{itemize}
+			\item \verb|\bibliographystyle{}|
+			\item \verb|\bibliography{bibfile.bib}|
+		\end{itemize}
+		\item The \verb|\bibliographystyle{}| determines what kind of citation style will be used. Common options are \cmd{apalike}, for author-year, \cmd{plain} for the most simple format, or \cmd{ieeetr} for footnote styles.
+		\item The path to the .bib file follows the same structure as that for figures. If it is in the same folder as the .tex file, just add its name.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Adding In-text References}
+	\begin{itemize} 
+\item To add a citation in the text, use the commands \verb|\citep{key}| or \verb|\citet{key}|. The code
+\end{itemize}
+\begin{verbatim}
+The Australian Sheep-Goat scale~\citep{Lange2002}
+ applies to populist beliefs, as described by
+  Paul~\citet{Taggart2000}.
+\bibliography{Day2.bib}
+\bibliographystyle{apalike}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Produces}
+	The Australian Sheep-Goat scale~\citep{Lange2002} applies to populist beliefs, as described by Paul~\citet{Taggart2000}.
+	\bigskip
+	\bibliography{Day2}
+	\bibliographystyle{apalike}
+\end{frame}
+
+\begin{frame}[fragile]{It's Practice Time}
+	\begin{itemize}
+		\item In sharelatex there are two files: \cmd{citation\_exercise} and \cmd{bibliography.bib}.
+		\begin{itemize}
+			\item The first is .tex file, where you will write a short paragraph (does not have to be accurate or make sense), including the three citations. At least once with \verb|\citet{}| and once with \verb|\citep{}|;
+			\item The second is a .bib file, where you will include three entries for any papers or books you like;
+						
+					\end{itemize}
+			\item Plus, of course, have the bibliography list at the end;
+			\item Once you're done, see if you can add page numbers to those citations in the text. E.g. Einstein (1905, 4).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Common Problems...}
+	\begin{itemize}
+		\item Two bibtex entries with the same key;
+		\item Typos in the .bib file. For example, a \} missing. 
+		\item A citation style that is not available or incompatible with other specifications.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Solutions}
+	\begin{itemize}
+	\item Important to know. When \LaTeX~compiles a PDF that has citations, it also creates a .bbl file.
+	\item This .bbl file sometimes \textbf{is not updated} when you edit a bibtex citation in the .bib file or change the \cmd{bibliographystyle}.
+	\item Therefore, every time you edit an existing citation in the .bib file, or want to change the style, go to your folder and \textbf{delete} the filename.bbl file before compiling the filename.tex file.
+	\begin{itemize}
+		\item For the sake of completion, actually delete every file that was generated (all those with the same name as the filename.tex file). Leave only the filename.tex and the mybib.bib.
+	\end{itemize}
+		\end{itemize}
+\end{frame}
+
+\begin{frame}{Tables Made Easier}
+	\begin{itemize}
+		\item First option: \href{http://tablesgenerator.com}{http://tablesgenerator.com}
+		\item Paste an Excel table, hit generate, and get the \LaTeX~code for it.
+		\item Second: Export from R. R packages:
+		\begin{itemize}
+		 \item \cmd{apsrtable}: creates tables from regression outputs following the APSR formatting.
+		 \item \cmd{stargazer}: comparative model summary tables;
+		 \item \cmd{texreg}: most flexible to convert model outputs to latex tables. Supports even multilevel and network models.
+		 \item the \cmd{latex()} function in the \cmd{Hmisc} package is also flexible, and can export \cmd{longtable} \LaTeX~tables.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Cross-references}
+	\begin{itemize}
+		\item Use the \cmd{hyperref} package to add colors to links for in-text references. Example: to tables, figures, equations, or citation entries.
+		\item In the preamble we can add
+	\end{itemize}
+	\begin{verbatim}
+	\usepackage[pdftex]{hyperref}
+	\hypersetup{colorlinks, citecolor=blue,
+	linkcolor=blue, urlcolor=red}
+	\end{verbatim}
+	\begin{itemize}
+		\item And in the text a call to: ``\verb|we see in Table~\ref{label}|''
+		\item NB! Add this as one of the first packages in the list, otherwise you get errors compiling. Just after \verb|\documentclass{}|
+	\end{itemize}
+\end{frame}
+
+
+\end{document}

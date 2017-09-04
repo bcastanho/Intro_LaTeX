@@ -1,0 +1,543 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,shadows}
+\usenavigationsymbolstemplate{}
+
+\newcommand{\cmd}[1]{{\color[HTML]{008000}\bftt{#1}}}
+
+
+\title{Introduction to \LaTeX}
+\author{Bruno Castanho Silva}
+
+\date{27.07.2017}
+
+\subtitle{Day 1: Basics}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+ 
+\begin{frame}{What Is \LaTeX?}
+\begin{itemize}
+	\item A document preparation system.
+	\item Plain text instead of WYSIWYG.
+	\item \cmd{commands} are used to define structure and style, as well as add citations, figures, tables, or equations.
+	\item A \TeX distribution (TeX Live or MikTeX) turns the plain text into PDF outputs.
+\end{itemize} 
+\end{frame}
+ 
+\begin{frame}{How does it work?}
+		\begin{itemize}
+			\item You write your document in \texttt{plain text} with \cmd{commands} that
+			describe its structure and meaning.
+			\item The \texttt{latex} program processes your text and commands to produce a
+			beautifully formatted document.
+			\end{itemize}
+\end{frame} %% end{frame} must start at the beginning of the line, otherwise error...
+	
+\begin{frame}[fragile]{Or...}
+		\begin{verbatim}
+			\begin{frame}{How does it work?}
+				\begin{itemize}
+					\item You write your document in \texttt{plain text} with 
+					\cmd{commands} that describe its structure and meaning.
+					\item The \texttt{latex} program processes your text and 
+					commands to produce a beautifully formatted document.
+				\end{itemize}
+			\end{frame}
+			\end{verbatim}
+\end{frame}
+
+\begin{frame}{What do We Need?}
+	\begin{itemize}
+		\item A text-editor
+		\begin{itemize}
+			\item Notepad will do. Or Vi, Emacs,...
+		\end{itemize}
+		\item A TeX distribution (compiler)
+		\begin{itemize}
+			\item MikTeX or TeX Live
+		\end{itemize} 
+		\item A PDF Viewer
+		\begin{itemize}
+			\item Adobe Reader, Google Chrome, Document Viewer, etc
+		\end{itemize}
+		\item Some GUI's have all three built in, facilitating the workflow:
+		\begin{itemize}
+			\item E.g.: TeXStudio. Online: Sharelatex
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Hello, world!}
+	\begin{itemize}
+		\item Open a new file in TeXStudio.
+		\item Write the following block of code:
+			\end{itemize}
+		\begin{verbatim}
+		\documentclass{article}
+		\begin{document}
+		Hello, world!
+		\end{document}
+		\end{verbatim}
+		\begin{itemize}
+			\item Hit the double green arrow on top.
+		\end{itemize}
+\end{frame}
+	
+\begin{frame}[fragile]{Unpacking...}
+	\begin{itemize}
+		\item Commands always start with a backslash: \textbackslash
+		\item The first command (\verb=\documentclass{article}=) defines the kind of document we are producing.
+		\begin{itemize}
+			\item There are a few different kinds to choose from. Each one has default formatting options.
+			\item Examples include \cmd{article}, \cmd{report}, \cmd{proc}, \cmd{letter}, or \cmd{plain}. More on that later...
+		\end{itemize}
+		\item Between \{ \} you include what you want that command applied to.
+		\begin{itemize}
+			\item E.g.: to make a word \textbf{bold}, you put it between \{\} in the command \verb=\textbf{}=.
+		\end{itemize}
+		\item The PDF output will only show text written in the \cmd{document} environment, meaning, between \verb=\begin{document}= and \verb=\end{document}=.
+		\item Everything before that is called the \textit{Preamble}.
+ 	\end{itemize}
+\end{frame}	
+
+\begin{frame}[fragile]
+	\begin{itemize} 
+	\item Quick exercise: Open the file called \cmd{Rock paper.tex} in Sharelatex. Starting with your blank document, produce the following sentence (with formatting) in an output (tip, the command for italic is \verb=\textit{}=):
+	\begin{itemize}
+		\item Scissors cuts paper, paper covers rock, rock crushes \textbf{lizard}, \textbf{lizard} poisons \textit{Spock}, \textit{Spock} smashes scissors, scissors decapitates \textbf{lizard}, \textbf{lizard} eats paper, paper disproves \textit{Spock}, \textit{Spock} vaporizes rock, and as it always has, rock crushes scissors.
+	\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Special Characters}
+	\begin{itemize}
+		\item Some special characters have coding functions in \LaTeX, so if you type them, they will not show up...
+		\begin{itemize}
+			\item We already saw about \textbackslash, that starts all commands.
+			\item Others are: \{ \} \$ \& \# \% \textasciitilde \textasciicircum \_
+		\end{itemize}
+		\item Code to produce the line above:
+	\end{itemize}
+	\begin{verbatim}
+	\item Others are: \{ \} \$ \& \# 
+	\% \textasciitilde \textasciicircum \_
+	\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Spaces}
+	\begin{itemize}
+		\item \TeX~treats multiple spaces in your plain text as a single space
+		\item Therefore, ``\verb=I    saw a    tiger='' is compiled as ``\verb=I saw a tiger=''.
+		\begin{itemize}
+			\item But but I want to have triple spaces!
+			\begin{itemize}
+				\item Use \textasciitilde~to force a space. Example:
+				\item ``\verb=I~~~~~want spaces='' compiles as ``I~~~~~want spaces''.
+			\end{itemize}
+		\end{itemize} 
+	\end{itemize}
+		
+	\begin{itemize}
+		\item Breaks between paragraphs are marked by a blank line in the text file. If you use a single Enter, it will be compiled as a single line.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{To produce...}
+	Happy families are all alike; every unhappy family is unhappy in its own way.
+	
+	Everything was in confusion in the Oblonskys' house. The wife had discovered that the husband was carrying on an intrigue with a French girl, who had been a governess in their family, and she had announced to her husband that she could not go on living in the same house with him.
+\end{frame}
+
+\begin{frame}[fragile]{Tolstoi typed...}
+	\begin{lstlisting}[breaklines]
+	Happy families are all alike; every unhappy family is unhappy in its own way.
+	
+	Everything was in confusion in the Oblonskys' house. The wife had discovered that the husband was carrying on an intrigue with a French girl, who had been a governess in their family, and she had announced to her husband that she could not go on living in the same house with him.
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Instead of...}
+	\begin{lstlisting}[breaklines]
+	Happy families are all alike; every unhappy family is unhappy in its own way.
+	Everything was in confusion in the Oblonskys' house. The wife had discovered that the husband was carrying on an intrigue with a French girl, who had been a governess in their family, and she had announced to her husband that she could not go on living in the same house with him.
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Exercise}
+\begin{itemize}
+	\item In the \cmd{Bonnie.tex} file in ShareLaTeX, add the following formatting to the paragraph.
+\end{itemize}
+	\textbf{Bonnie \& Clyde} stole \$45,000 dollars from the \#1 bank in the country, Fathers \& Sons.
+	
+	That was \textit{85\% of the bank's reserves}, and they went bankrupt shortly after.
+\end{frame}
+
+\begin{frame}[fragile]{Solution}
+	\begin{lstlisting}[breaklines]
+	\textbf{Bonnie \& Clyde} stole \$45,000 dollars from the \#1 bank in the country, Fathers \& Sons.
+	
+	That was \textit{85\% of the bank's reserves}, and they went bankrupt shortly after.
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{More Useful Characters}
+	\begin{itemize}
+		\item Quotation marks won't work. You need one (or two) backtick (\`{}) on the left, and apostrophes (') on the right. So...
+		\item \`{}\`{}Really? No quotation marks?\'{}\'{}~ produces ``Really? No quotation marks?''.
+		\item \% is used for comments to your code. If you simply type \%, everything after it in a line will not be printed. 
+		\item Example. Typing:
+	\end{itemize}
+	\begin{verbatim}
+	Blablabla % should we cite the crappy Gabor paper here??
+	\end{verbatim}
+	prints
+	
+	
+	\bigskip
+	
+	Blablabla % should we cite the crappy Gabor paper here??
+\end{frame}
+
+\begin{frame}{Errors}
+	\begin{itemize}
+		\item With so many brackets, commands and all, it is very easy to make typos.
+		\item Plus, \LaTeX~is a really sensitive guy who'll freak out for the smallest things...
+		\item Meaning, will not compile the PDF and return a cryptic error message.
+		\item Don't panic! (before the first hour is over at least...)
+		\item TeXStudio will give you a red sign where it is finding the problem. 
+		\item If it was compiling before, redo your last changes. Start debugging from there.
+		\begin{itemize}
+			\item Reason why it's good practice to compile frequently. Also to save changes.
+		\end{itemize}
+		\item Or, Google the error message. There are lots of help pages and forums.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Getting started}
+	\begin{itemize}
+		\item Document classes (\verb=\documentclass{}=):
+		\begin{itemize}
+			\item \cmd{article}: Most common for you. Short document without chapters;
+			\item \cmd{report}: longer documents with chapters. Useful for your thesis;
+			\item \cmd{book}: for books. Formatting is double-sided with front matter and back matter.
+			\item \cmd{letter}: correspondence. Letters of intent.
+			\item \cmd{plain}: the most simple, no defaults. Good for debugging.
+			\item \cmd{beamer}: presentation slides (as this one...).
+		\end{itemize}
+		\item Universities and journals often have their own specific templates.
+		\item It's the first line in the file.
+		\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Let's start with an Article}
+	\verb=\documentclass{article}=
+	\begin{itemize}
+		\item We've got to give it a title and an author.
+		\item These go into the \textbf{preamble}. That's the chunk of code between \verb=\documentclass{}= and \verb=\begin{document}=. 
+		\item Use it to define properties of your file.
+		\item Title and author:
+		\begin{itemize}
+			\item \verb=\title{The Phantom Menace}=
+			\item \verb=\author{George Lucas}=
+		\end{itemize}
+		\item Try printing just a title and your name into a document of class \cmd{article}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{If it's not in the Main Body...}
+	\begin{verbatim}
+	\documentclass{article}
+	\title{The Phantom Menace}
+	\author{George Lucas}
+	\begin{document}
+	\maketitle
+	\end{document}
+	\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Co-authors}
+	\begin{verbatim}
+	\documentclass{article}
+	\title{Big Nature Paper}
+	\author{Wrote the Paper \and Supervisor \and Data Owner}
+	\begin{document}
+		\maketitle
+	\end{document}
+	\end{verbatim} 
+\end{frame}
+
+\begin{frame}[fragile]{Structure}
+	\begin{itemize}
+		\item A good book or paper should be divided into sections, subsections, etc...
+		\item \LaTeX~makes that very easy.
+		\item Using
+		\begin{itemize}
+			\item \verb=\chapter{}=
+			\item \verb=\section{}=
+			\item \verb=\subsection{}=
+			\item \verb=\subsubsection{}=
+		\end{itemize}
+		\item Will have \LaTeX~take care of the numbering.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Try out...}
+	\begin{verbatim}
+	\documentclass{article}
+	\usepackage{lipsum}
+	\title{Important Political Science Paper}
+	\author{John Nimeta}
+	\begin{document}
+		\maketitle
+		\section{Literature Review}
+		\lipsum[1]
+		\subsection{Important Findings}
+		\lipsum[13]
+	\end{document}
+	\end{verbatim} 
+\end{frame}
+
+\begin{frame}[fragile]{Packages}
+	\begin{itemize}
+		\item Add-ons, plugins, whatever name you'd be more familiar with...
+		\item Thousands of extensions adding functionality.
+		\item Expand formatting, style, characters, functions.
+		\item Always go in the preamble.
+		\item Every \TeX~distribution comes with a set of common packages installed. If you want to use one that is not installed, simply by typing \verb=\usepackage{}=, with the package name within \{\} in the preamble will automatically download and install it.
+		\item One of the most common sources of errors... sometimes there are incompatibilities between two packages.
+	\end{itemize} 
+\end{frame}
+
+\begin{frame}[fragile]{A Few Common Ones}
+	\begin{itemize}
+		\item \verb=\usepackage[T1]{fontenc}=: Makes some details in the typesetting of fonts look nicer;
+		\item \verb=\usepackage{geometry}=: Smaller margins than the default;
+		\item \verb=\usepackage{natbib}=: Library of citation styles.
+		\item \verb=\usepackage{hyperref}=: Links. Both to outside pages and within the document. 
+		\item \verb=\usepackage{setspace}=: Enables alternating between single and double-space between lines.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Other Elements in a Paper}
+	\begin{itemize}
+		\item Abstracts:
+	\end{itemize}
+	\begin{verbatim}
+	\begin{document}
+	\maketitle
+	\begin{abstract}
+	This paper is about...
+	\end{abstract}
+	\end{document}
+	\end{verbatim}
+	\begin{itemize}
+		\item Footnotes
+		\begin{itemize}
+			\item \verb=\footnote{}=
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	Exercise...
+\end{frame}
+
+\begin{frame}[fragile]{Formatting Options}
+	\begin{itemize}
+		\item First, most \LaTeX~defaults have a reason to be there. Change only if you really want or have to.
+		\item A common options...
+		\begin{itemize}
+			\item \verb=\documentclass[12pt,a4paper]{article}=: font size, family, and paper size are defined as options in the \verb=\documentclass{}= command.
+			\item \verb|\usepackage[margin=2cm]{geometry}|: control the size of margins.
+			\item \verb|\usepackage{setspace}|, followed by a command \verb|\singlespacing or \doublespacing| in the text to define the space between lines.
+		\end{itemize}
+		\item Those that go in the preamble affect the whole document.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{More Formatting Options}
+	\begin{itemize}
+		\item Options to change formatting only for a word or block of text:
+		\begin{itemize}
+		\item \verb|\begin{center} Text \end{center}|: centering a block of text.
+		\item Font sizes: \tiny{\verb|{\tiny }|}, \scriptsize{\verb|{\scriptsize }|}, \footnotesize{\verb|{\footnotesize }|}, \small{\verb|{\small }|}, \normalsize{\verb|{\normalsize }|}, \large{\verb|{\large }|}, \Large{\verb|{\Large }|}, \LARGE{\verb|{\LARGE }|}, \huge{\verb|{\huge }|}, \Huge{\verb|{\Huge }|}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Examples}
+	\begin{itemize}
+		\item So, the code:
+	\end{itemize}
+	 \verb|I am a man who \huge walks alone|
+	 \begin{itemize}
+	 	\item Produces
+	 \end{itemize}
+	 I am a man who \huge walks alone
+	 \begin{itemize}
+	 	\item \normalsize And to make
+	 \end{itemize}
+	 \normalsize I am a man who {\huge walks} alone
+	 \begin{itemize}
+	 	\item Type
+	 \end{itemize}
+	 \verb|I am a man who \huge{walks} \normalsize alone|
+	 \begin{itemize}
+	 	\item or
+	 \end{itemize}
+	 \verb|I am a man who {\huge walks} alone|
+\end{frame}
+
+\begin{frame}[fragile]{Even More Formatting Options}
+	\begin{itemize}
+		\item We've seen \verb|\textbf{} and \textit{}| already...
+		\item further options:
+		\begin{itemize}
+			\item \verb|\underline|: \underline{Self-explanatory...};
+			\item \verb|\textsc|: \textsc{Small caps};
+			\item \verb|\emph|: \emph{emphasizing};
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Vertical Spacing}
+	\begin{itemize}
+		\item To force small, medium, and large spaces between paragraphs:
+		\begin{itemize}
+			\item \verb|\smallskip|
+			\item \verb|\medskip|
+			\item \verb|\bigskip|
+		\end{itemize}
+		\item Page breaks:
+		\begin{itemize}
+			\item \verb|\pagebreak|
+			\item \verb|\newpage|
+		\end{itemize}
+		\item Line breaks:
+		\begin{itemize}
+			\item \textbackslash\textbackslash
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Environments}
+	\begin{itemize}
+		\item An environment is a \textit{context};
+		\item Different formatting and compiling rules apply within an environment;
+		\item We can use them to tell \LaTeX~that what's coming is math, figures, a table, etc.
+		\item The commands \verb|\begin{}| and \verb|\end{}| are used to create various environments.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Examples of Environments: Enumeration}
+	\begin{verbatim}
+	Best Christopher Nolan movies
+	\begin{enumerate}
+	\item The Dark Knight
+	\item Inception
+	\item Memento
+	\end{enumerate}
+	\end{verbatim}
+	Generates:
+	
+	Best Christopher Nolan movies
+	\begin{enumerate}
+		\item The Dark Knight
+		\item Inception
+		\item Memento
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Examples of Environments: Itemize}
+	On the other hand,
+	\begin{verbatim}
+	Best Christopher Nolan movies
+	\begin{itemize}
+	\item The Dark Knight
+	\item Inception
+	\item Memento
+	\end{itemize}
+	\end{verbatim}
+	Generates: 
+	
+		Best Christopher Nolan movies
+		\begin{itemize}
+			\item The Dark Knight
+			\item Inception
+			\item Memento
+		\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Foreign Languages}
+	\begin{itemize}
+		\item If you have non-English characters in the text file, \LaTeX~will either ignore or freak out...
+		\item If we try typing ``\texttt{Universit\"{a}tstra\ss e}'', that's what comes out...
+		\begin{itemize}
+		\item Universittstrae
+		\end{itemize}
+		\item If it's just a few special characters in an English text, the cleanest option is using special characters:
+		\begin{itemize}
+			\item \verb|\"{o}|, \verb|\"{a}|, \verb|\"{u}| producing: \"{o}, \"{a}, \"{u};
+			\item \verb|\v{s}|, \verb|\v{c}| or \verb|\v{z}| producing: \v{s}, \v{c}, \v{z};
+			\item \verb|\'{a}|, \verb|\'{e}|, \verb|\~{a}|, \verb|\`{a}|, \verb|\^{a}| producing: \'{a}, \'{e}, \~{a}, \`{a}, \^{a}.
+		\end{itemize}
+		\item And so on... plenty of lists of special characters are available online.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Foreign Languages}
+	\begin{itemize}
+		\item However, for direct input of longer blocks of text, use the \cmd{babel} and \cmd{inputenc} packages:
+	\end{itemize}
+	\begin{verbatim}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\begin{document}
+Здравствуйте
+\end{document}
+	\end{verbatim}
+	\begin{itemize} 
+	\item Generating:
+	\end{itemize}
+	Здравствуйте
+\end{frame}
+
+\begin{frame}[fragile]{Foreign Languages}
+	\begin{itemize}
+		\item And, for a special section of foreign language text in an English text...
+	\end{itemize}
+	\begin{verbatim}
+	\usepackage[utf8]{inputenc}
+	\usepackage[russian,english]{babel}
+	\begin{document}
+	Populism started with the
+	 \foreignlanguage{russian}{народники}, in Russia
+	\end{document}
+	\end{verbatim}
+	\begin{itemize}
+		\item Becomes:
+	\end{itemize}
+	Populism started with the \foreignlanguage{russian}{народники}, in Russia
+	\begin{itemize}
+		\item NB! The last language in \verb|\usepackage[lang1,lang2]{babel}| is the active.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	Exercise 2
+\end{frame}
+
+
+\end{document}
